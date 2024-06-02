@@ -1,0 +1,28 @@
+$colors: (
+	'font-w': white,
+	'bg-details': rgb(9, 210, 9),
+	'bg-details-color': white,
+	'header-bg-buylogo': rgba(0, 30, 255, 0.353),
+	'bg-header-container1': rgba(0, 170, 255),
+	'bg-header-container2': rgba(21, 219, 237, 0.969),
+	'bg-main': rgba(67, 179, 202, 0.363),
+	'bg-main-container1': rgb(81, 236, 250),
+	'bg-prodcard': rgb(17, 32, 91),
+	'bg-prodcard-container1': rgba(2, 12, 58, 0.72),
+	'bg-prodcard-container2': rgba(2, 2, 60, 0.49),
+	'bg-modal-cart-container1': rgb(0, 121, 255),
+);
+$font-1: 'Montserrat', sans-serif;
+$font-2: 'Droid serif', serif;
+$font-3: 'Verdana', sans-serif;
+$font-4: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+$font-5: Proxima Nova, -apple-system, Roboto, Arial, sans-serif;
+
+$fonts: (
+	f-primary: $font-1,
+	f-aboutus: $font-2,
+	f-aboutus-ul: $font-3,
+	f-contact: $font-4,
+	f-sesion: $font-4,
+	f-product-price: $font-5,
+);

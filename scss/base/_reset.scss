@@ -1,0 +1,21 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: map-get($fonts, 'f-primary');
+	text-decoration: none;
+	list-style: none;
+}
+body {
+	background-color: map-get($colors, 'bg-main');
+	min-height: 100vh;
+}
+li,
+ul {
+	list-style-type: none;
+	color: map-get($colors, 'font-w');
+}
+
+a {
+	text-decoration: none;
+}

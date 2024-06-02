@@ -1,0 +1,58 @@
+{
+	"productos": [
+		{
+			"pid": 1,
+			"nombre": "Manteca",
+			"marca": "tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 13.55,
+			"stock": 5,
+			"img": "../img/manteca-taserenisima.png"
+		},
+		{
+			"pid": 2,
+			"nombre": "Manteca",
+			"marca": "tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 13.55,
+			"stock": 15,
+			"img": "img/manteca-taserenisima.png"
+		},
+		{
+			"pid": 3,
+			"nombre": "Manteca",
+			"marca": "tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 13.55,
+			"stock": 10,
+			"img": "img/manteca-taserenisima.png"
+		},
+		{
+			"pid": 4,
+			"nombre": "Manteca",
+			"marca": "tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 13.55,
+			"stock": 5,
+			"img": "img/manteca-taserenisima.png"
+		},
+		{
+			"pid": 5,
+			"nombre": "Manteca",
+			"marca": "tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 13.55,
+			"stock": 8,
+			"img": "img/manteca-taserenisima.png"
+		},
+		{
+			"pid": 6,
+			"nombre": "Manteca",
+			"marca": "tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 13.55,
+			"stock": 16,
+			"img": "img/manteca-taserenisima.png"
+		}
+	]
+}
