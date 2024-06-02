@@ -7,7 +7,7 @@
 			"categoria": "Comestibles",
 			"precio": 13.55,
 			"stock": 5,
-			"img": "../img/manteca-taserenisima.png"
+			"img": "./img/manteca-taserenisima.png"
 		},
 		{
 			"pid": 2,
