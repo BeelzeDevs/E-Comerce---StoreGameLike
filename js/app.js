@@ -23,15 +23,17 @@ class Producto {
 	precio;
 	stock;
 	img;
-	constructor(nombre, marca,categoria, precio, stock, img) {
+	envio;
+	constructor(nombre, marca,categoria, precio, stock, img, envio=0) {
 		Producto.contadorID += 1;
 		this.pid = Producto.contadorID;
 		this.nombre = nombre;
 		this.categoria = categoria;
 		this.marca = marca;
-		this.precio = precio;
+		this.precio = parseFloat(precio).toFixed(2);
 		this.stock = stock;
 		this.img = img;
+		this.envio = envio;
 	}
 
 	getPid() {
@@ -42,6 +44,12 @@ class Producto {
 	}
 	getNombre() {
 		return this.nombre;
+	}
+	setEnvio(envio) {
+		this.envio=parseFloat(envio).toFixed(2);
+	}
+	getEnvio() {
+		return this.envio;
 	}
 	setNombre(nombre) {
 		this.nombre = nombre;
@@ -62,10 +70,10 @@ class Producto {
 	}
 
 	getPrecio() {
-		return this.precio;
+		return parseFloat(this.precio).toFixed(2);
 	}
 	setPrecio(p) {
-		this.precio = p;
+		this.precio = parseFloat(p).toFixed(2);
 	}
 
 	getStock() {
@@ -82,6 +90,23 @@ class Producto {
 		this.img = img;
 	}
 }
+class Usuario  {
+	SaldoCuenta;
+	constructor(dinero=10000.00){
+		this.SaldoCuenta = parseFloat(dinero).toFixed(2);
+	}
+	getSaldoCuenta(){
+		return parseFloat(this.SaldoCuenta).toFixed(2);
+	}
+	setSaldoCuenta(dinero){
+		this.SaldoCuenta = parseFloat(dinero).toFixed(2);
+	}
+	sumarSaldoCuenta(dinero){
+		this.SaldoCuenta += parseFloat(dinero).toFixed(2);
+	}
+}
+
+
 
 const actualizarPID = async () => {
 	try {
@@ -95,6 +120,10 @@ const actualizarPID = async () => {
 		console.error('Error función datos()', error);
 	}
 };
+const cargarUsuarios = () =>{
+	const usuario = new Usuario();
+	localStorage.setItem('usuario',JSON.stringify(usuario));
+}
 const cargarStorageProductos = async () => {
 	localStorage.clear();
 	try {
@@ -105,6 +134,7 @@ const cargarStorageProductos = async () => {
 		console.error('Error función datos()', error);
 	}
 };
+
 const cargarProductosAIndex = async () => {
 	const productsCardContainer = document.getElementById('productsCardContainer');
 	const templateProdCard = document.getElementById('template-productCard')
@@ -207,6 +237,35 @@ const restProd = (e) => {
 	}
 	actualizarTotalProdCard(e);
 };
+const actualizarUnidadesCarritoIndex = () =>{
+	const logoUnidades = document.querySelector('#cart-units');
+	const cantidad = carrito.reduce((acc)=> acc += 1, 0);
+	logoUnidades.textContent = parseInt(cantidad);
+
+}
+const actualizarTotalAlCarrito = ()=>{
+	const usuario = JSON.parse(localStorage.getItem('usuario'));
+	const totalPriceCart = document.querySelector('#total-price');
+	const totalEnvCart = document.querySelector('#total-env');
+	const cartTotal = document.querySelector('#cart-total');
+	const carritoUserSaldo = document.querySelector('#carrito-saldoUsuario');
+	const carritoUserSaldoRestante = document.querySelector('#carrito-saldoRestanteAlComprar');
+	const carritoSaldoRestanteAlComprar = document.querySelector('#carrito-saldoRestanteAlComprar');
+	const cartTotalPage = document.querySelector('#cart-total-index');
+	// calculo
+	SumaTotalPrecios = parseFloat(carrito.reduce((acc,item)=> {return acc += (item.getPrecio() * item.getStock())},0)).toFixed(2);
+	SumaTotalEnvios = carrito.reduce((acc,item)=> { return acc += item.getEnvio()},0);
+	// texcontent
+	totalPriceCart.textContent = "$" + SumaTotalPrecios;
+	totalEnvCart.textContent = "$" + SumaTotalEnvios;
+	cartTotal.textContent = "$" + parseFloat(SumaTotalEnvios + SumaTotalPrecios).toFixed(2);
+	carritoUserSaldo.textContent = "$" + JSON.parse(localStorage.getItem('usuario')).SaldoCuenta;
+	carritoUserSaldoRestante.textContent = '$' + (JSON.parse(localStorage.getItem('usuario')).SaldoCuenta - parseFloat(SumaTotalEnvios + SumaTotalPrecios).toFixed(2));
+	carritoSaldoRestanteAlComprar.textContent = '$' + parseFloat(usuario.SaldoCuenta - parseFloat(SumaTotalEnvios + SumaTotalPrecios).toFixed(2)).toFixed(2);
+	cartTotalPage.textContent = "$" + parseFloat(SumaTotalEnvios + SumaTotalPrecios).toFixed(2);
+	actualizarUnidadesCarritoIndex();
+
+}
 const pintarCarrito = () =>{
 
 	const fragment = document.createDocumentFragment();
@@ -223,13 +282,13 @@ const pintarCarrito = () =>{
 		const precioEnvioCarrito = clone.querySelector('#precioEnvioCarrito');
 		const cartProductTotal = clone.querySelector('#cartProduct-total');
 		const cartBtnEliminar = clone.querySelector('#cartbtn-eliminar');
-		console.log(cartProductTotal);
 		//dataset id
 		botonMas.dataset.pid = item.getPid();
 		botonMenos.dataset.pid = item.getPid();
 		cartProductTotal.dataset.pid = item.getPid();
 		cantidadAcomprarCarrito.dataset.pid = item.getPid();
 		cartBtnEliminar.dataset.pid = item.getPid();
+		precioEnvioCarrito.dataset.pid = item.getPid();
 
 		// textcontent
 		productName.textContent = item.getNombre();
@@ -242,35 +301,38 @@ const pintarCarrito = () =>{
 		fragment.appendChild(clone);
 	})
 	cartProducts.appendChild(fragment);
+	actualizarTotalAlCarrito();
 }
 const añadirProductosAlCarrito = async (e) =>{
+	
 	const dataID = e.target.getAttribute('data-pid');
 	const selecProdIndex = productos.findIndex((item) => item.pid == dataID);
 	const selecProd = productos[selecProdIndex];
 	const cantidadAcomprar = parseInt(document.querySelector(`#cantidadAcomprar[data-pid="${dataID}"]`).textContent);
-
-	// reduzco stock del array
-	productos[selecProdIndex].stock -= cantidadAcomprar;
+	if(cantidadAcomprar != 0 ){
+		// reduzco stock del array
+		productos[selecProdIndex].stock -= cantidadAcomprar;
 	
-	// Creo un Producto. Si no existe lo agrego al carrito. si existe, le sumo el stock pedido.
-	const productoAagregar = new Producto(selecProd.nombre,selecProd.marca,selecProd.categoria,selecProd.precio,cantidadAcomprar,selecProd.img);
-	productoAagregar.setPid(dataID);
-	const existeEncarrito = carrito.findIndex((item)=> item.getPid() == dataID);
+		// Creo un Producto. Si no existe lo agrego al carrito. si existe, le sumo el stock pedido.
+		const productoAagregar = new Producto(selecProd.nombre,selecProd.marca,selecProd.categoria,selecProd.precio,cantidadAcomprar,selecProd.img);
+		productoAagregar.setPid(dataID);
+		const existeEncarrito = carrito.findIndex((item)=> item.getPid() == dataID);
+		
+		if(existeEncarrito === -1){
+			carrito.push(productoAagregar);
+		}
+		else{
+			const stockPedidoAnt = carrito[existeEncarrito].getStock();
+			carrito[existeEncarrito].setStock(stockPedidoAnt + cantidadAcomprar);
+		}
+		localStorage.setItem('carrito',JSON.stringify(carrito));
+		localStorage.setItem('productos',JSON.stringify(productos));
+		
+		pintarCarrito();
+		actualizarTotalProdCard(e);
+		cargarProductosAIndex();
+	}	
 	
-	if(existeEncarrito === -1){
-		carrito.push(productoAagregar);
-	}
-	else{
-		const stockPedidoAnt = carrito[existeEncarrito].getStock();
-		carrito[existeEncarrito].setStock(stockPedidoAnt + cantidadAcomprar);
-	}
-	localStorage.setItem('carrito',JSON.stringify(carrito));
-	localStorage.setItem('productos',JSON.stringify(productos));
-	
-	pintarCarrito();
-	actualizarTotalProdCard(e);
-	//
-	//
 }
 const eliminarDelCarrito = (e) => {
 	const selectedID = e.target.dataset.pid;
@@ -286,12 +348,42 @@ const eliminarDelCarrito = (e) => {
 	pintarCarrito();
 	cargarProductosAIndex();
 }
+const vaciarCarrito = () =>{
+	carrito.map((item)=>{
+		productos.map((product) =>
+			{
+				if(product.pid == item.getPid()){
+					return product.stock += item.getStock();
+				}
+			});
+			return;
+	});
+	carrito = [];
+	localStorage.setItem('carrito', JSON.stringify(carrito));
+	pintarCarrito();
+	cargarProductosAIndex();
+
+}
+const comprarCarrito = () =>{
+	const user = JSON.parse(localStorage.getItem('usuario'));
+	const cartTotal = document.querySelector('#cart-total').textContent.slice(1);
+	const total = parseFloat(user.SaldoCuenta).toFixed(2) - parseFloat(cartTotal).toFixed(2);
+	user.SaldoCuenta = total;
+	carrito = [];
+	localStorage.setItem('usuario',JSON.stringify(user));
+	localStorage.setItem('carrito',JSON.stringify(carrito));
+	pintarCarrito();
+	cargarProductosAIndex();
+}
 // INICIO DE API
 document.addEventListener('DOMContentLoaded', async () => {
 	await actualizarPID();
 	await cargarStorageProductos();
 	await cargarProductosAIndex();
+	cargarUsuarios();
 });
+document.addEventListener('', ()=>{
+})
 
 document.addEventListener('click', async (e) => {
 	if (e.target.matches('#close-Cart')) {
@@ -302,7 +394,6 @@ document.addEventListener('click', async (e) => {
 	}
 	if (e.target.matches('#agregarCarrito')) {
 		añadirProductosAlCarrito(e);
-		cargarProductosAIndex();
 		toggleCart();
 	}
 	if (e.target.matches('#prod-cantidadMenos')) {
@@ -311,10 +402,18 @@ document.addEventListener('click', async (e) => {
 	if (e.target.matches('#prod-cantidadMas')) {
 		sumProd(e);
 	}
-	if (e.target.matches('#cart-cantidadMas')) {
-	}
 	if(e.target.matches('#cartbtn-eliminar')){
 		eliminarDelCarrito(e);
+	}
+	if(e.target.matches('#cart-empty')){
+		vaciarCarrito();
+	}
+	if(e.target.matches('#cart-buy')){
+		comprarCarrito();
+	}
+	if (e.target.matches('#cart-cantidadMas')) {
+	}
+	if (e.target.matches('#cart-cantidadMenos')) {
 
 	}
 });
