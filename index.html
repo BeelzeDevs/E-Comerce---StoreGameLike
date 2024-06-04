@@ -57,6 +57,7 @@
                 </div>
                 <div class="pad-10 cart-total">
                     <p>Total<span id="cart-total">$2800</span></p>
+                    <p id="error-saldoInsuficiente" class="d-none"> saldo insuficiente </p>
                 </div>
                 <div class="pad-10 cartbtns">
                     <p>Saldo actual <span id="carrito-saldoUsuario">$0</span></p>
@@ -90,8 +91,6 @@
             <div class="category-filter">
                 <label for="">CATEGORÍA:</label>
                 <select id="category-select">
-                    <option value="" selected disabled>--</option>
-                    <option value="">Comestibles</option>
                 </select>
             </div>
         </section>
@@ -102,8 +101,8 @@
             <article class="product-card" id="productCard">
                 <div class="prod-container-1">
                     <div class="prod-titulo">
-                        <h3 id="prod-name">Nombre producto </h3>
-                        <p><span id="prod-brand">Marca</span></p>
+                        <h3 id="prod-brand">Marca</h3>
+                        <p><span id="prod-name">Nombre producto</span></p>
                         <p><span id="prod-stock">cantidadStock</span></p>
                     </div>
                     <div class="prod-info">

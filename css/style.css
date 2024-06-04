@@ -115,7 +115,8 @@ a {
   border-radius: 50%;
 }
 .products .product-card .prod-container-2 .order-total {
-  font-size: 1.3em;
+  font-size: 1em;
+  font-weight: 600;
 }
 .products .product-card .prod-container-2 .order-total p {
   margin: 0px;
@@ -319,7 +320,7 @@ main .modal-cart .modal-container3 .pad-10.cart-total {
 main .modal-cart .modal-container3 .pad-10.cartbtns {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 main .modal-cart .modal-container3 .pad-10 div {
   display: flex;
@@ -412,8 +413,9 @@ header .container-2 .container-2-cartprice .container-2-cartlogo i {
   cursor: pointer;
 }
 
-main {
+body main {
   background-color: rgba(67, 179, 202, 0.363);
+  min-height: 80vh;
 }
 
 /*# sourceMappingURL=style.css.map */
