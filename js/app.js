@@ -548,7 +548,7 @@ const cargarBarraBuscador = () =>{
 		const palabraBuscada = searchInput.value.toLowerCase();
 		let coincidencias = [];
 		productos.forEach((prod)=>{
-			if(prod.nombre.toLowerCase().includes(palabraBuscada)){
+			if(prod.nombre.toLowerCase().includes(palabraBuscada) || prod.marca.toLowerCase().includes(palabraBuscada)){
 				coincidencias.push(prod.pid);
 			}
 		});
