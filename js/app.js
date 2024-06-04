@@ -552,10 +552,8 @@ const cargarBarraBuscador = () =>{
 				coincidencias.push(prod.pid);
 			}
 		});
-		console.log(palabraBuscada,coincidencias);
 		
 		if(coincidencias[0] === undefined){
-			console.log('entro');
 			cargarProductosAIndex();
 		}else{
 			const productCardContainer = document.getElementById('productsCardContainer');
