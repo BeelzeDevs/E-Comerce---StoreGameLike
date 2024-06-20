@@ -14,6 +14,4 @@ const datos = async () => {
 	}
 };
 
-export {
-    datos
-};
+export default datos;

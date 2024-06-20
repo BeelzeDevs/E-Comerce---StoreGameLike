@@ -1,8 +1,11 @@
 
-import {datos} from '../connection/connect.js';
-import {Usuario} from '../models/Usuario.js'
+import datos from '../connection/connect.js';
+import Usuario from '../models/Usuario.js'
+import Producto from '../models/Producto.js';
+
 import { pintarCarrito , cargarCarrito} from '../services/carrito.js';
 import { cargarStorageProductos} from '../services/producto.js';
+
 class StorageService {
     
     static getItem(key) {
@@ -46,7 +49,13 @@ class StorageService {
     static async initializeStorage() {
         try {
             const datos1 = await datos();
-            this.setItem('productos', datos1.productos);
+            const productosData = datos1.productos;
+            const productos = productosData.map((item)=>{
+                const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio);
+                prod.setPid = item.pid;
+                return prod;
+            })
+            this.setItem('productos',productos);
             const usuario = new Usuario();
             this.setItem('usuario', usuario);
             this.setItem('carrito', []);

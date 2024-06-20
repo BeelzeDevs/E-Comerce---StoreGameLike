@@ -1,8 +1,8 @@
 import StorageService from './utils/storage.js';
+import datos  from './connection/connect.js';
+import  Producto  from './models/Producto.js';
+import  Usuario  from './models/Usuario.js';
 
-import { datos } from './connection/connect.js';
-import { Producto } from './models/Producto.js';
-import { Usuario } from './models/Usuario.js';
 import {cargarCategorias} from './services/categorias.js';
 import { cargarUsuarios} from './services/usuario.js';
 import { 
@@ -32,19 +32,32 @@ let carrito = [];
 let usuario = [];
 
 const cargarDatos = () =>{
-	if (!StorageService.getItem('usuario')) {
-		StorageService.setItem('usuario', []);
-		usuario = StorageService.getItem('usuario');
-		
-	}
-	if (!StorageService.getItem('productos')) {
-		StorageService.setItem('productos', []);
-		productos = StorageService.getItem('productos');
-	}
-	if (!StorageService.getItem('carrito')) {
-		StorageService.setItem('carrito', []);
-		carrito = StorageService.getItem('carrito');
-	}
+	const productosData = StorageService.getItem('productos') || [];
+    const carritoData = StorageService.getItem('carrito') || [];
+	const usuarioData = StorageService.getItem('usuario') || [];
+	
+	if(productosData.length !== 0){
+		productos = productosData.map(item =>{ 
+			const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
+			prod.setPid = item.pid; 
+			return prod;
+		});
+	}else productos = productosData;
+
+	if(carritoData.length !== 0){
+		carrito = carritoData.map(item =>{ 
+			const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
+			prod.setPid = item.pid; 
+			return prod;
+		});
+	}else carrito = carritoData;
+
+	if(usuarioData.length !== 0){
+		usuario = usuarioData.map(item=>{
+			const user = new Usuario ();
+			return user;
+		});
+	}else usuario = usuarioData;
 }
     
 

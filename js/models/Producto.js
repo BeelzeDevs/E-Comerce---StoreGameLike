@@ -20,61 +20,59 @@ class Producto {
 		this.envio = envio;
 	}
 
-	getPid() {
+	get getPid() {
 		return this.pid;
 	}
-	setPid(pid) {
+	set setPid(pid) {
 		this.pid = pid;
 	}
-	getNombre() {
+	get getNombre() {
 		return this.nombre;
 	}
-	setEnvio(envio) {
-		this.envio = parseFloat(envio).toFixed(2);
-	}
-	getEnvio() {
-		return this.envio;
-	}
-	setNombre(nombre) {
+	set setNombre(nombre) {
 		this.nombre = nombre;
 	}
+	set setEnvio(envio) {
+		this.envio = parseFloat(envio).toFixed(2);
+	}
+	get getEnvio() {
+		return this.envio;
+	}
 
-	getCategoria() {
+	get getCategoria() {
 		return this.categoria;
 	}
-	setCategoria(cat) {
+	set setCategoria(cat) {
 		this.categoria = cat;
 	}
 
-	getMarca() {
+	get getMarca() {
 		return this.marca;
 	}
-	setMarca(marca) {
+	set setMarca(marca) {
 		this.marca = marca;
 	}
 
-	getPrecio() {
+	get getPrecio() {
 		return parseFloat(this.precio).toFixed(2);
 	}
-	setPrecio(p) {
+	set setPrecio(p) {
 		this.precio = parseFloat(p).toFixed(2);
 	}
 
-	getStock() {
+	get getStock() {
 		return this.stock;
 	}
-	setStock(stock) {
+	set setStock(stock) {
 		this.stock = stock;
 	}
 
-	getImg() {
+	get getImg() {
 		return this.img;
 	}
-	setImg(img) {
+	set setImg(img) {
 		this.img = img;
 	}
 }
 
-export {
-	Producto
-};
+export default Producto;

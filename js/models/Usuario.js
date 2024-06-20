@@ -3,10 +3,10 @@ class Usuario {
 	constructor(dinero = 1000000.0) {
 		this.saldoCuenta = parseFloat(dinero).toFixed(2);
 	}
-	getSaldoCuenta() {
+	get getSaldoCuenta() {
 		return parseFloat(this.saldoCuenta).toFixed(2);
 	}
-	setSaldoCuenta(dinero) {
+	set setSaldoCuenta(dinero) {
 		this.saldoCuenta = parseFloat(dinero).toFixed(2);
 	}
 	sumarSaldoCuenta(dinero) {
@@ -14,6 +14,4 @@ class Usuario {
 	}
 }
 
-export {
-	Usuario
-};
+export default Usuario;

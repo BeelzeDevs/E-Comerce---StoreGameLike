@@ -1,4 +1,5 @@
 import StorageService from '../utils/storage.js';
+import Producto from '../models/Producto.js';
 import { pintarProductosAIndex } from './producto.js';
 
 let productos = [];
@@ -6,9 +7,25 @@ let carrito = [];
 let usuario = [];
 
 const cargarDatos = () =>{
-    productos = StorageService.getItem('productos') || [];
-    carrito = StorageService.getItem('carrito') || [] ;
-    usuario = StorageService.getItem('usuario') || [] ;
+	const productosData = StorageService.getItem('productos') || [];
+    const carritoData = StorageService.getItem('carrito') || [];
+    usuario = StorageService.getItem('usuario') || [];
+
+	if(productosData.length !== 0){
+		productos = productosData.map(item =>{ 
+			new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
+			item.setPid = item.pid; 
+			return item;
+		});
+	}else productos = productosData;
+	
+	if(carritoData.length !== 0){
+		carrito = carritoData.map(item =>{ 
+			new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
+			item.setPid = item.pid; 
+			return item;
+		});
+	}else carrito = carritoData;
 }
 const cargarCategorias = () => {
     cargarDatos();

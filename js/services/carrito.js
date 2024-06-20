@@ -1,8 +1,8 @@
 import StorageService from '../utils/storage.js';
+import Producto from '../models/Producto.js';
 
-import {Producto} from '../models/Producto.js';
-import {pintarProductosAIndex, cargarStorageProductos} from './producto.js';
-import {formatearNumbero,formatearNumbero2Decimales} from './formatNumbers.js';
+import {pintarProductosAIndex} from './producto.js';
+import {formatearNumbero2Decimales} from './formatNumbers.js';
 
 
 let productos = [];
@@ -11,15 +11,30 @@ let usuario = [];
 
 // Cargar datos del localStorage
 const cargarDatos = () => {
-    productos = StorageService.getItem('productos') || [];
-    carrito = StorageService.getItem('carrito') || [];
+    const productosData = StorageService.getItem('productos') || [];
+    const carritoData = StorageService.getItem('carrito') || [];
     usuario = StorageService.getItem('usuario') || [];
+
+	// convertir los datos planos en instancias de Producto
+	if(productosData.length !== 0){
+		productos = productosData.map(item =>{ 
+			const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
+			prod.setPid = item.pid; 
+			return prod;
+		});
+	}else productos = productosData;
+
+	if(carritoData.length !== 0){
+		carrito = carritoData.map(item =>{ 
+			const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
+			prod.setPid = item.pid; 
+			return prod;
+		});
+	}else carrito = carritoData;
 };
 
 const cargarCarrito = () => {
 	cargarDatos();
-	
-
 	if (carrito.length !== 0) {
 		const carritoData = StorageService.getItem('carrito');
 		carrito = carritoData.map((item) => {
@@ -32,7 +47,7 @@ const cargarCarrito = () => {
 				item.img,
 				item.envio
 			);
-			prod.setPid(item.pid);
+			prod.setPid = item.pid;
 			return prod;
 		});
 	}else {
@@ -56,18 +71,17 @@ const actualizarTotalAlCarrito = () => {
 	// calculo
 	const SumaTotalPrecios = parseFloat(
 		carrito.reduce((acc, item) => {
-			return (acc += item.getPrecio() * item.getStock());
+			return (acc += item.getPrecio * item.getStock);
 		}, 0)
 	);
 	const SumaTotalEnvios = carrito.reduce((acc, item) => {
-		return (acc += item.getEnvio());
+		return (acc += item.getEnvio);
 	}, 0);
 	// texcontent
     
 	const saldoUsuario = parseFloat(
-		StorageService.getItem('usuario').saldoCuenta
+		usuario[0].saldoCuenta
 	);
-    
 
 	const SumaTotalCarrito = parseFloat(SumaTotalEnvios + SumaTotalPrecios);
 	const CuentaSaldoRestante = parseFloat(saldoUsuario - SumaTotalCarrito);
@@ -102,23 +116,23 @@ const pintarCarrito = () => {
 		const cartProductTotal = clone.querySelector('#cartProduct-total');
 		const cartBtnEliminar = clone.querySelector('#cartbtn-eliminar');
 		//dataset id
-		botonMas.dataset.pid = item.getPid();
-		botonMenos.dataset.pid = item.getPid();
-		cartProductTotal.dataset.pid = item.getPid();
-		cantidadAcomprarCarrito.dataset.pid = item.getPid();
-		cartBtnEliminar.dataset.pid = item.getPid();
-		precioEnvioCarrito.dataset.pid = item.getPid();
+		botonMas.dataset.pid = item.getPid;
+		botonMenos.dataset.pid = item.getPid;
+		cartProductTotal.dataset.pid = item.getPid;
+		cantidadAcomprarCarrito.dataset.pid = item.getPid;
+		cartBtnEliminar.dataset.pid = item.getPid;
+		precioEnvioCarrito.dataset.pid = item.getPid;
 
 		// textcontent
-		productName.textContent = item.getMarca() + ' - ' + item.getNombre();
-		cantidadAcomprarCarrito.textContent = item.getStock();
+		productName.textContent = item.getMarca + ' - ' + item.getNombre;
+		cantidadAcomprarCarrito.textContent = item.getStock;
 		precioXunidadCarrito.textContent =
-			'$' + formatearNumbero2Decimales(parseFloat(item.getPrecio()));
+			'$' + formatearNumbero2Decimales(parseFloat(item.getPrecio));
 		precioEnvioCarrito.textContent = 0;
 		cartProductTotal.textContent =
 			'$' +
 			formatearNumbero2Decimales(
-				parseFloat(item.getStock() * item.getPrecio())
+				parseFloat(item.getStock * item.getPrecio)
 			);
 		cartProductTotal.appendChild(cartBtnEliminar);
 
@@ -129,14 +143,14 @@ const pintarCarrito = () => {
 };
 
 const eliminarDelCarrito = (e) => {
-	const selectedID = e.target.dataset.pid;
-	const carritoSelect = carrito.filter((item) => item.getPid() === selectedID);
-	const stockAdevolver = carritoSelect[0].getStock();
+	const selectedID = parseInt(e.target.dataset.pid);
+	const carritoIndex = carrito.findIndex((item) => item.getPid === selectedID);
+	const stockAdevolver = carrito[carritoIndex].getStock;
 
 	productos.map((item) => {
-		if (item.pid == selectedID) item.stock += stockAdevolver;
+		if (item.pid == selectedID) item.setStock = item.getStock + stockAdevolver;
 	});
-	carrito = carrito.filter((item) => item.getPid() !== selectedID);
+	carrito = carrito.filter((item) => item.getPid !== selectedID);
 	StorageService.setItem('carrito', carrito);
 	StorageService.setItem('productos', productos);
 	pintarCarrito();
@@ -144,37 +158,40 @@ const eliminarDelCarrito = (e) => {
 };
 
 const vaciarCarrito = () => {
+	cargarDatos();
+	console.log(productos);
+	console.log(carrito);
+	
 	carrito.map((item) => {
-		productos.map((product) => {
-			if (product.pid == item.getPid()) {
-				return (product.stock += item.getStock());
-			}
-		});
-		return;
+		const indexAdevolverStock = productos.findIndex((prod)=> prod.getPid === item.getPid );
+		if(indexAdevolverStock == -1) return item;
+		productos[indexAdevolverStock].setStock = productos[indexAdevolverStock].getStock + item.getStock;
+		return item;
 	});
 	carrito = [];
 	StorageService.setItem('carrito', carrito);
+	StorageService.setItem('productos',productos);
 	pintarCarrito();
 	pintarProductosAIndex();
 };
 
 const comprarCarrito = () => {
+	cargarDatos();
 	const errorSaldoInsuficiente = document.getElementById(
 		'error-saldoInsuficiente'
 	);
-	const user = StorageService.getItem('usuario');
+	const userMoney = usuario[0].saldoCuenta;
 	const cartTotal = document
 		.querySelector('#cart-total')
 		.textContent.slice(1)
 		.replace(/,/g, ''); //quitar el formato al número
-	const saldoCuenta = user.saldoCuenta;
-	const total = saldoCuenta - cartTotal;
+	const total = userMoney - cartTotal;
 	if (total >= 0) {
 		errorSaldoInsuficiente.classList.add('d-none');
-		user.saldoCuenta = total;
+		usuario[0].saldoCuenta = total;
 		carrito = [];
 		StorageService.setItem('carrito', carrito);
-		StorageService.setItem('usuario', user);
+		StorageService.setItem('usuario', usuario);
 		pintarCarrito();
 		pintarProductosAIndex();
 	} else {
@@ -199,13 +216,12 @@ const comprarCarrito = () => {
 };
 
 const sumProdCarrito = (e) => {
-	const dataID = e.target.getAttribute('data-pid');
-	const producto = productos.filter((item) => item.pid == dataID);
-	const productoIndex = productos.findIndex((item) => item.pid == dataID);
+	const dataID = parseInt(e.target.getAttribute('data-pid'));
+	const productoIndex = productos.findIndex((item) => item.getPid === dataID);
 	carrito.map((item) => {
-		if (item.getPid() == dataID && productos[productoIndex].stock - 1 >= 0) {
-			item.setStock(item.getStock() + 1);
-			productos[productoIndex].stock -= 1;
+		if (item.getPid === dataID && productos[productoIndex].getStock - 1 >= 0) {
+			item.setStock = item.getStock + 1;
+			productos[productoIndex].setStock = productos[productoIndex].getStock - 1;
 		}
 	});
 	StorageService.setItem('productos', productos);
@@ -216,13 +232,12 @@ const sumProdCarrito = (e) => {
 };
 
 const restProdCarrito = (e) => {
-	const dataID = e.target.getAttribute('data-pid');
-	const producto = productos.filter((item) => item.pid == dataID);
-	const productoIndex = productos.findIndex((item) => item.pid == dataID);
+	const dataID = parseInt(e.target.getAttribute('data-pid'));
+	const productoIndex = productos.findIndex((item) => item.getPid === dataID);
 	carrito.map((item) => {
-		if (item.getPid() == dataID && item.getStock() - 1 > 0) {
-			item.setStock(item.getStock() - 1);
-			productos[productoIndex].stock += 1;
+		if (item.getPid == dataID && item.getStock - 1 > 0) {
+			item.setStock = item.getStock - 1;
+			productos[productoIndex].setStock = productos[productoIndex].getStock + 1;
 		}
 	});
 	StorageService.setItem('productos', productos);
