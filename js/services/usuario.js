@@ -1,13 +1,13 @@
 import {Usuario} from '../models/Usuario.js';
+import StorageService from '../utils/storage.js';
 
 const cargarUsuarios = () => {
-	if (localStorage.getItem('usuario')) {
-		const usuario = JSON.parse(localStorage.getItem('usuario'));
-		console.log(usuario);
+	if (StorageService.getItem('usuario').length !== 0) {
+		const usuario = StorageService.getItem('usuario');
 		return;
 	} else {
 		const usuario = new Usuario();
-		localStorage.setItem('usuario', JSON.stringify(usuario));
+		StorageService.setItem('usuario', usuario);
 	}
 };
 

@@ -1,10 +1,17 @@
-import {cargarStorageProductos} from './producto.js';
+import StorageService from '../utils/storage.js';
+import { pintarProductosAIndex } from './producto.js';
 
-let productos = JSON.parse(localStorage.getItem('productos'));
+let productos = [];
+let carrito = [];
+let usuario = [];
 
-
-
+const cargarDatos = () =>{
+    productos = StorageService.getItem('productos') || [];
+    carrito = StorageService.getItem('carrito') || [] ;
+    usuario = StorageService.getItem('usuario') || [] ;
+}
 const cargarCategorias = () => {
+    cargarDatos();
 	const categoriasIndex = document.getElementById('category-select');
 	const categoriasUnicas = new Set(); // solo permite valores únicos
 	productos.forEach((producto) => categoriasUnicas.add(producto.categoria));

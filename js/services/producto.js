@@ -1,14 +1,26 @@
+import StorageService from '../utils/storage.js';
+
 import {datos} from '../connection/connect.js';
 import {Producto} from '../models/Producto.js';
-import { pintarCarrito } from './carrito.js';
+import { cargarCarrito } from './carrito.js';
 import {formatearNumbero,formatearNumbero2Decimales} from './formatNumbers.js';
 
-let productos = JSON.parse(localStorage.getItem('productos'));
-let carrito = JSON.parse(localStorage.getItem('carrito'));
+
+let productos = [];
+let carrito = [];
+let usuario = [];
+// Cargar datos del localStorage
+const cargarDatos = () => {
+    productos = StorageService.getItem('productos') || [];
+    carrito = StorageService.getItem('carrito') || [];
+    usuario = StorageService.getItem('usuario') || [];
+};
+
 
 const cargarStorageProductos = async () => {
-	if (localStorage.getItem('productos')) {
-		const productosData = JSON.parse(localStorage.getItem('productos'));
+	cargarDatos();
+	if (productos.length !== 0) {
+		const productosData = StorageService.getItem('productos');
 		productos = productosData.map((item) => {
 			const prod = new Producto(
 				item.nombre,
@@ -26,8 +38,9 @@ const cargarStorageProductos = async () => {
 	} else {
 		try {
 			const datos1 = await datos();
-			localStorage.setItem('productos', JSON.stringify(datos1.productos));
+			StorageService.setItem('productos', datos1.productos);
 			productos = [...datos1.productos];
+			await pintarProductosAIndex();
 		} catch (error) {
 			console.error('Error función datos()', error);
 		}
@@ -105,6 +118,7 @@ const pintarProductosAIndex = async () => {
 	});
 
 	productsCardContainer.appendChild(fragment);
+
 };
 
 const actualizarTotalProdCard = (e) => {
@@ -185,10 +199,10 @@ const añadirProductosAlCarrito = async (e) => {
 			const stockPedidoAnt = carrito[existeEncarrito].getStock();
 			carrito[existeEncarrito].setStock( stockPedidoAnt + cantidadAcomprar);
 		}
-		localStorage.setItem('carrito', JSON.stringify(carrito));
-		localStorage.setItem('productos', JSON.stringify(productos));
+		StorageService.setItem('carrito', carrito);
+		StorageService.setItem('productos', productos);
 
-		pintarCarrito();
+		cargarCarrito();
 		actualizarTotalProdCard(e);
 		pintarProductosAIndex();
 	}

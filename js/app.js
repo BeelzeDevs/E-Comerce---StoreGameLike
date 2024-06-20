@@ -1,4 +1,6 @@
-import {datos} from './connection/connect.js';
+import StorageService from './utils/storage.js';
+
+import { datos } from './connection/connect.js';
 import { Producto } from './models/Producto.js';
 import { Usuario } from './models/Usuario.js';
 import {cargarCategorias} from './services/categorias.js';
@@ -21,12 +23,30 @@ import {
     restProdCarrito,
     toggleCart   
 } from './services/carrito.js';
+import {cargarBarraBuscador } from './services/barraBuscador.js';
 
+// Si no existen en localStorage, los inicializa.
 
+let productos = [];
+let carrito = [];
+let usuario = [];
 
-
-
-
+const cargarDatos = () =>{
+	if (!StorageService.getItem('usuario')) {
+		StorageService.setItem('usuario', []);
+		usuario = StorageService.getItem('usuario');
+		
+	}
+	if (!StorageService.getItem('productos')) {
+		StorageService.setItem('productos', []);
+		productos = StorageService.getItem('productos');
+	}
+	if (!StorageService.getItem('carrito')) {
+		StorageService.setItem('carrito', []);
+		carrito = StorageService.getItem('carrito');
+	}
+}
+    
 
 const actualizarPID = async () => {
 	try {
@@ -43,60 +63,13 @@ const actualizarPID = async () => {
 };
 
 
-const reinicioTotal = async () => {
-	localStorage.removeItem('carrito');
-	localStorage.removeItem('productos');
-	localStorage.removeItem('usuario');
-	
-	const datos1 = await datos();
-	localStorage.setItem('productos', JSON.stringify(datos1.productos));
-	let productos = [...datos1.productos];
-	const usuario = new Usuario();
-	localStorage.setItem('usuario', JSON.stringify(usuario));
-	let carrito = [];
-	localStorage.setItem('carrito', JSON.stringify(carrito));
-	pintarCarrito();
-	cargarStorageProductos();
-};
 
-const cargarBarraBuscador = () => {
-	const searchInput = document.getElementById('search-input');
-	searchInput.addEventListener('input', () => {
-		const palabraBuscada = searchInput.value.toLowerCase();
-		let coincidencias = [];
-		productos.forEach((prod) => {
-			if (
-				prod.nombre.toLowerCase().includes(palabraBuscada) ||
-				prod.marca.toLowerCase().includes(palabraBuscada)
-			) {
-				coincidencias.push(prod.pid);
-			}
-		});
 
-		if (coincidencias[0] === undefined) {
-			pintarProductosAIndex();
-		} else {
-			const productCardContainer = document.getElementById(
-				'productsCardContainer'
-			);
-			const fragment = document.createDocumentFragment();
-			productCardContainer.innerHTML = '';
-
-			productos.forEach((item) => {
-				if (coincidencias.includes(item.pid)) {
-					crearProductoNuevo(fragment, item);
-				}
-			});
-			productCardContainer.appendChild(fragment);
-		}
-	});
-};
 // INICIO DE API
 document.addEventListener('DOMContentLoaded', async () => {
+	cargarDatos();
 	await actualizarPID();
 	await cargarStorageProductos();
-	await pintarProductosAIndex();
-
 	cargarUsuarios();
 	cargarCarrito();
 	cargarCategorias();
@@ -112,6 +85,7 @@ document.addEventListener('click', async (e) => {
 	}
 	if (e.target.matches('#agregarCarrito')) {
 		añadirProductosAlCarrito(e);
+		
 	}
 	if (e.target.matches('#prod-cantidadMenos')) {
 		restProd(e);
@@ -135,7 +109,7 @@ document.addEventListener('click', async (e) => {
 		restProdCarrito(e);
 	}
 	if (e.target.matches('#btnReinicio')) {
-		reinicioTotal();
+		StorageService.resetStorage();
 	}
 });
 

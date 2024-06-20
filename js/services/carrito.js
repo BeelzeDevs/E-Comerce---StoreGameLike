@@ -1,15 +1,27 @@
+import StorageService from '../utils/storage.js';
+
 import {Producto} from '../models/Producto.js';
 import {pintarProductosAIndex, cargarStorageProductos} from './producto.js';
 import {formatearNumbero,formatearNumbero2Decimales} from './formatNumbers.js';
 
 
-let productos = JSON.parse(localStorage.getItem('productos'));
-let carrito = JSON.parse(localStorage.getItem('carrito'));
+let productos = [];
+let carrito = [];
+let usuario = [];
 
+// Cargar datos del localStorage
+const cargarDatos = () => {
+    productos = StorageService.getItem('productos') || [];
+    carrito = StorageService.getItem('carrito') || [];
+    usuario = StorageService.getItem('usuario') || [];
+};
 
 const cargarCarrito = () => {
-	if (localStorage.getItem('carrito')) {
-		const carritoData = JSON.parse(localStorage.getItem('carrito'));
+	cargarDatos();
+	
+
+	if (carrito.length !== 0) {
+		const carritoData = StorageService.getItem('carrito');
 		carrito = carritoData.map((item) => {
 			const prod = new Producto(
 				item.nombre,
@@ -23,11 +35,13 @@ const cargarCarrito = () => {
 			prod.setPid(item.pid);
 			return prod;
 		});
-		pintarCarrito();
 	}else {
 			carrito = [];
-			localStorage.setItem('carrito', JSON.stringify(carrito));
+			StorageService.setItem('carrito',carrito);
+			
 	}
+	
+	pintarCarrito();
 };
 
 const actualizarTotalAlCarrito = () => {
@@ -51,7 +65,7 @@ const actualizarTotalAlCarrito = () => {
 	// texcontent
     
 	const saldoUsuario = parseFloat(
-		JSON.parse(localStorage.getItem('usuario')).saldoCuenta
+		StorageService.getItem('usuario').saldoCuenta
 	);
     
 
@@ -123,8 +137,8 @@ const eliminarDelCarrito = (e) => {
 		if (item.pid == selectedID) item.stock += stockAdevolver;
 	});
 	carrito = carrito.filter((item) => item.getPid() !== selectedID);
-	localStorage.setItem('carrito', JSON.stringify(carrito));
-	localStorage.setItem('productos', JSON.stringify(productos));
+	StorageService.setItem('carrito', carrito);
+	StorageService.setItem('productos', productos);
 	pintarCarrito();
 	pintarProductosAIndex();
 };
@@ -139,7 +153,7 @@ const vaciarCarrito = () => {
 		return;
 	});
 	carrito = [];
-	localStorage.setItem('carrito', JSON.stringify(carrito));
+	StorageService.setItem('carrito', carrito);
 	pintarCarrito();
 	pintarProductosAIndex();
 };
@@ -148,7 +162,7 @@ const comprarCarrito = () => {
 	const errorSaldoInsuficiente = document.getElementById(
 		'error-saldoInsuficiente'
 	);
-	const user = JSON.parse(localStorage.getItem('usuario'));
+	const user = StorageService.getItem('usuario');
 	const cartTotal = document
 		.querySelector('#cart-total')
 		.textContent.slice(1)
@@ -159,8 +173,8 @@ const comprarCarrito = () => {
 		errorSaldoInsuficiente.classList.add('d-none');
 		user.saldoCuenta = total;
 		carrito = [];
-		localStorage.setItem('carrito', JSON.stringify(carrito));
-		localStorage.setItem('usuario', JSON.stringify(user));
+		StorageService.setItem('carrito', carrito);
+		StorageService.setItem('usuario', user);
 		pintarCarrito();
 		pintarProductosAIndex();
 	} else {
@@ -194,8 +208,8 @@ const sumProdCarrito = (e) => {
 			productos[productoIndex].stock -= 1;
 		}
 	});
-	localStorage.setItem('productos', JSON.stringify(producto));
-	localStorage.setItem('carrito', JSON.stringify(carrito));
+	StorageService.setItem('productos', productos);
+	StorageService.setItem('carrito', carrito);
 	actualizarTotalAlCarrito();
 	pintarCarrito();
 	pintarProductosAIndex();
@@ -211,8 +225,8 @@ const restProdCarrito = (e) => {
 			productos[productoIndex].stock += 1;
 		}
 	});
-	localStorage.setItem('productos', JSON.stringify(producto));
-	localStorage.setItem('carrito', JSON.stringify(carrito));
+	StorageService.setItem('productos', productos);
+	StorageService.setItem('carrito',carrito);
 	actualizarTotalAlCarrito();
 	pintarCarrito();
 	pintarProductosAIndex();
