@@ -80,7 +80,22 @@ class StorageService {
                 });
             }else this.usuario = usuarioData;
         }
+        const actualizarPID = async () => {
+            try {
+                const datos1 = await datos();
+                //funcion max
+                const max = (listProducts) => {
+                    if (!listProducts.length) return 0;
+                    return Math.max(...listProducts.map((product) => product.pid));
+                };
+                Producto.contadorID = max(datos1.productos);
+            } catch (error) {
+                console.error('Error función datos()', error);
+            }
+        };
+        
         cargarDatos();
+        await actualizarPID();
 	    await cargarStorageProductos();
 	    cargarUsuarios();
 	    cargarCarrito();

@@ -27,9 +27,6 @@ import {cargarBarraBuscador } from './services/barraBuscador.js';
 
 // Si no existen en localStorage, los inicializa.
 
-let productos = [];
-let carrito = [];
-let usuario = [];
 
 const cargarDatos = () =>{
 	const productosData = StorageService.getItem('productos') || [];
@@ -61,32 +58,14 @@ const cargarDatos = () =>{
 }
     
 
-const actualizarPID = async () => {
-	try {
-		const datos1 = await datos();
-		//funcion max
-		const max = (listProducts) => {
-			if (!listProducts.length) return 0;
-			return Math.max(...listProducts.map((product) => product.pid));
-		};
-		Producto.contadorID = max(datos1.productos);
-	} catch (error) {
-		console.error('Error función datos()', error);
-	}
-};
+
 
 
 
 
 // INICIO DE API
 document.addEventListener('DOMContentLoaded', async () => {
-	cargarDatos();
-	await actualizarPID();
-	await cargarStorageProductos();
-	cargarUsuarios();
-	cargarCarrito();
-	cargarCategorias();
-	cargarBarraBuscador();
+	StorageService.initializeStorage();
 });
 
 document.addEventListener('click', async (e) => {
@@ -123,7 +102,6 @@ document.addEventListener('click', async (e) => {
 	}
 	if (e.target.matches('#btnReinicio')) {
 		StorageService.resetStorage();
-	    await actualizarPID();
 	}
 });
 

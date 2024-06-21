@@ -33,6 +33,8 @@ const cargarCategorias = () => {
 	const categoriasUnicas = new Set(); // solo permite valores únicos
 	productos.forEach((producto) => categoriasUnicas.add(producto.categoria));
 	const arrayCategorias = Array.from(categoriasUnicas);
+	// limpio el inner
+	categoriasIndex.innerHTML = '';
 	// primer elemento desactivado
 	const categoriaNueva = document.createElement('option');
 	categoriaNueva.value = '';
