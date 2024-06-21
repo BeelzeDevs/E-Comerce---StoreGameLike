@@ -68,6 +68,7 @@ const cargarCategorias = () => {
 						return 0; // ambos son 'Bebidas'
 					}
 				});
+				StorageService.setItem('productos',productos);
 				pintarProductosAIndex();
 				break;
 			case 'Comestibles':
@@ -83,6 +84,7 @@ const cargarCategorias = () => {
 						return 0;
 					}
 				});
+				StorageService.setItem('productos',productos);
 				pintarProductosAIndex();
 				break;
 			case 'Limpieza':
@@ -95,6 +97,7 @@ const cargarCategorias = () => {
 						return 0;
 					}
 				});
+				StorageService.setItem('productos',productos);
 				pintarProductosAIndex();
 				break;
 			case 'Marca asc':
@@ -107,6 +110,7 @@ const cargarCategorias = () => {
 						return 0;
 					}
 				});
+				StorageService.setItem('productos',productos);
 				pintarProductosAIndex();
 				break;
 			case 'Marca desc':
@@ -119,6 +123,7 @@ const cargarCategorias = () => {
 						return 0;
 					}
 				});
+				StorageService.setItem('productos',productos);
 				pintarProductosAIndex();
 				break;
 		}

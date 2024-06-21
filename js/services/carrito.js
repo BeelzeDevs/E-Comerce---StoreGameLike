@@ -159,8 +159,6 @@ const eliminarDelCarrito = (e) => {
 
 const vaciarCarrito = () => {
 	cargarDatos();
-	console.log(productos);
-	console.log(carrito);
 	
 	carrito.map((item) => {
 		const indexAdevolverStock = productos.findIndex((prod)=> prod.getPid === item.getPid );

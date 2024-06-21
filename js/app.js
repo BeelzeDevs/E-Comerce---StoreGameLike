@@ -123,6 +123,7 @@ document.addEventListener('click', async (e) => {
 	}
 	if (e.target.matches('#btnReinicio')) {
 		StorageService.resetStorage();
+	    await actualizarPID();
 	}
 });
 
