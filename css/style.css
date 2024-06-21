@@ -283,7 +283,7 @@ main .modal-cart .modal-container2 table tr .cart-unit span {
 }
 main .modal-cart .modal-container2 table tr .cart-total {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   gap: 5px;
 }
