@@ -1,21 +1,7 @@
 import StorageService from './utils/storage.js';
-import datos  from './connection/connect.js';
-import  Producto  from './models/Producto.js';
-import  Usuario  from './models/Usuario.js';
 
-import {cargarCategorias} from './services/categorias.js';
-import { cargarUsuarios} from './services/usuario.js';
-import { 
-	cargarStorageProductos,
-    crearProductoNuevo,
-    pintarProductosAIndex,
-    sumProd,
-    restProd,
-    añadirProductosAlCarrito
-} from './services/producto.js';
+import { sumProd,restProd,añadirProductosAlCarrito} from './services/producto.js';
 import {
-	cargarCarrito,
-    pintarCarrito,
     eliminarDelCarrito,
     vaciarCarrito,
     comprarCarrito,
@@ -23,10 +9,6 @@ import {
     restProdCarrito,
     toggleCart   
 } from './services/carrito.js';
-import {cargarBarraBuscador } from './services/barraBuscador.js';
-
-
-
 
 
 
