@@ -25,39 +25,6 @@ import {
 } from './services/carrito.js';
 import {cargarBarraBuscador } from './services/barraBuscador.js';
 
-// Si no existen en localStorage, los inicializa.
-
-
-const cargarDatos = () =>{
-	const productosData = StorageService.getItem('productos') || [];
-    const carritoData = StorageService.getItem('carrito') || [];
-	const usuarioData = StorageService.getItem('usuario') || [];
-	
-	if(productosData.length !== 0){
-		productos = productosData.map(item =>{ 
-			const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
-			prod.setPid = item.pid; 
-			return prod;
-		});
-	}else productos = productosData;
-
-	if(carritoData.length !== 0){
-		carrito = carritoData.map(item =>{ 
-			const prod = new Producto(item.nombre, item.marca, item.categoria, item.precio, item.stock, item.img, item.envio); 
-			prod.setPid = item.pid; 
-			return prod;
-		});
-	}else carrito = carritoData;
-
-	if(usuarioData.length !== 0){
-		usuario = usuarioData.map(item=>{
-			const user = new Usuario ();
-			return user;
-		});
-	}else usuario = usuarioData;
-}
-    
-
 
 
 
