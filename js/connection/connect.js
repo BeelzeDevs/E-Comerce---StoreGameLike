@@ -1,6 +1,6 @@
 
 const API_URL = 'data.json';
-const API_URL2 = '.././data.json'
+const API_URL2 = '../../data.json'
 const datos = async () => {
 	try {
 		const response = await fetch(API_URL2);
