@@ -1,5 +1,5 @@
 
-const API_URL = '../json/data.json';
+const API_URL = 'data.json';
 
 const datos = async () => {
 	try {
