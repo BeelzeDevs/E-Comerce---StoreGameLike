@@ -1,0 +1,139 @@
+{
+	"productos": [
+		{
+			"pid": 1,
+			"nombre": "Manteca",
+			"marca": "Tasserenisima",
+			"categoria": "Comestibles",
+			"precio": 2650.50,
+			"stock": 6,
+			"img": "img/manteca-taserenisima.webp"
+		},
+		{
+			"pid": 2,
+			"nombre": "Detergente lavavajillas",
+			"marca": "Ala",
+			"categoria": "Limpieza",
+			"precio": 3796,
+			"stock": 10,
+			"img": "img/ala-detergente.webp"
+		},
+		{
+			"pid": 3,
+			"nombre": "Detergente ropa",
+			"marca": "Ala",
+			"categoria": "Limpieza",
+			"precio": 9576,
+			"stock": 12,
+			"img": "img/ala-detergenteropa.webp"
+		},
+		{
+			"pid": 4,
+			"nombre": "Lavandina",
+			"marca": "Ayudin",
+			"categoria": "Limpieza",
+			"precio": 4802,
+			"stock": 6,
+			"img": "img/ayudin-lavandina.webp"
+		},
+		{
+			"pid": 5,
+			"nombre": "Pan blanco",
+			"marca": "Bimbo",
+			"categoria": "Comestibles",
+			"precio": 3500,
+			"stock": 16,
+			"img": "img/bimbo-panblanco.webp"
+		},
+		{
+			"pid": 6,
+			"nombre": "Pan integral",
+			"marca": "Bimbo",
+			"categoria": "Comestibles",
+			"precio": 3100,
+			"stock": 13,
+			"img": "img/bimbo-panintegral.webp"
+		},
+		{
+			"pid": 7,
+			"nombre": "Whisky",
+			"marca": "Blue label",
+			"categoria": "Bebidas",
+			"precio": 381745,
+			"stock": 5,
+			"img": "img/bluelabel.webp"
+		},
+		{
+			"pid": 8,
+			"nombre": "Detergente",
+			"marca": "Cif",
+			"categoria": "Limpieza",
+			"precio": 2050,
+			"stock": 8,
+			"img": "img/cif-detergente.webp"
+		},
+		{
+			"pid": 9,
+			"nombre": "Gaseosa 1.5l",
+			"marca": "Coca Cola",
+			"categoria": "Bebidas",
+			"precio": 2030,
+			"stock": 20,
+			"img": "img/cocacola-1-5lit.webp"
+		},
+		{
+			"pid": 10,
+			"nombre": "Gaseosa 2.25l",
+			"marca": "Coca cola",
+			"categoria": "Bebidas",
+			"precio": 2727,
+			"stock": 25,
+			"img": "img/cocacola-2-25l.webp"
+		},
+		{
+			"pid": 11,
+			"nombre": "Fideos",
+			"marca": "Don vicente",
+			"categoria": "Comestibles",
+			"precio": 2260,
+			"stock": 20,
+			"img": "img/donvicente-fideos.webp"
+		},
+		{
+			"pid": 12,
+			"nombre": "Palitos surimi",
+			"marca": "Kanikama",
+			"categoria": "Comestibles",
+			"precio": 15700,
+			"stock": 7,
+			"img": "img/kanikama-palitossurimi.webp"
+		},
+		{
+			"pid": 13,
+			"nombre": "Lomitos de atún",
+			"marca": "LaAnonima",
+			"categoria": "Comestibles",
+			"precio": 3355,
+			"stock": 10,
+			"img": "img/laanonima-lomitosdeatun.webp"
+		},
+		{
+			"pid": 14,
+			"nombre": "Hamburguesas",
+			"marca": "Union ganadera",
+			"categoria": "Comestibles",
+			"precio": 25894.50,
+			"stock": 15,
+			"img": "img/unionganadera-hamburguesas.webp"
+		},
+		{
+			"pid": 15,
+			"nombre": "Whisky",
+			"marca": "Jack Daniels",
+			"categoria": "Bebidas",
+			"precio": 40897,
+			"stock": 10,
+			"img": "img/whisky-jack.webp"
+		}
+	]
+}
