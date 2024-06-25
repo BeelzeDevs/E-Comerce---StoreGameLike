@@ -1,9 +1,9 @@
 
 const API_URL = 'data.json';
-
+const API_URL2 = '../json/data.json'
 const datos = async () => {
 	try {
-		const response = await fetch(API_URL);
+		const response = await fetch(API_URL2);
 		if (!response.ok) {
 			throw new Error('Error al solicitar el archivo data.json');
 		}
