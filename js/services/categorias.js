@@ -27,8 +27,22 @@ const cargarDatos = () =>{
 		});
 	}else carrito = carritoData;
 }
+const ordenProductosDefault_porPid = () =>{
+	productos.sort((a,b)=>{
+		if(a.pid > b.pid){
+			return 1
+		}else if(a.pid < b.pid){
+			return -1;
+		}else{
+			return 0;
+		}
+	});
+	StorageService.setItem('productos',productos);
+	pintarProductosAIndex();
+}
 const cargarCategorias = () => {
     cargarDatos();
+	ordenProductosDefault_porPid();
 	const categoriasIndex = document.getElementById('category-select');
 	const categoriasUnicas = new Set(); // solo permite valores únicos
 	productos.forEach((producto) => categoriasUnicas.add(producto.categoria));
@@ -37,7 +51,7 @@ const cargarCategorias = () => {
 	categoriasIndex.innerHTML = '';
 	// primer elemento desactivado
 	const categoriaNueva = document.createElement('option');
-	categoriaNueva.value = '';
+	categoriaNueva.value = 'vacio';
 	categoriaNueva.textContent = '--';
 	categoriaNueva.disabled = true;
 	categoriaNueva.selected = true;
@@ -127,6 +141,12 @@ const cargarCategorias = () => {
 				});
 				StorageService.setItem('productos',productos);
 				pintarProductosAIndex();
+				break;
+			case 'vacio':
+
+				break;
+			default:
+				console.log(productos.value);
 				break;
 		}
 	});
