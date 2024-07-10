@@ -33,7 +33,7 @@
 				p{
 					margin: 0px;
 				}
-				#prod-stock{
+				.prod-stock{
 					font-size: 0.8em;
 				}
 			}
@@ -95,7 +95,7 @@
 					margin: 0px;
 				}
 			}
-			button#agregarCarrito {
+			button.agregarCarrito {
 				border-radius: 7px;
 				background-color: map-get($colors, 'bg-details');
 				color: map-get($colors, 'bg-details-color');

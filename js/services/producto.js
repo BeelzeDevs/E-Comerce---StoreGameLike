@@ -64,19 +64,20 @@ const crearProductoNuevo = (fragment, product) => {
 	const clone = templateProdCard.content.cloneNode(true);
 
 	// Producto Nuevo
-	const productCard = clone.querySelector('#productCard');
-	const categoria = clone.querySelector('#categoria');
-	const precioxunidad = clone.querySelector('#precioXunidad');
-	const nombre = clone.querySelector('#prod-name');
-	const brand = clone.querySelector('#prod-brand');
-	const total = clone.querySelector('#totalCard');
-	const img = clone.querySelector('#prod-img');
-	const stock = clone.querySelector('#prod-stock');
-	const cantidadAcomprar = clone.querySelector('#cantidadAcomprar');
-	const cantidadMenos = clone.querySelector('#prod-cantidadMenos');
-	const cantidadMas = clone.querySelector('#prod-cantidadMas');
-	const btnAddCart = clone.querySelector('#agregarCarrito');
+	const productCard = clone.querySelector('.product-card');
+	const categoria = clone.querySelector('.categoria');
+	const precioxunidad = clone.querySelector('.precioXunidad');
+	const nombre = clone.querySelector('.prod-name');
+	const brand = clone.querySelector('.prod-brand');
+	const total = clone.querySelector('.totalCard');
+	const img = clone.querySelector('.prod-img');
+	const stock = clone.querySelector('.prod-stock');
+	const cantidadAcomprar = clone.querySelector('.cantidadAcomprar');
+	const cantidadMenos = clone.querySelector('.prod-cantidadMenos');
+	const cantidadMas = clone.querySelector('.prod-cantidadMas');
+	const btnAddCart = clone.querySelector('.agregarCarrito');
 
+	
 	// Producto - dataset pid
 	precioxunidad.dataset.pid = product.getPid;
 	cantidadAcomprar.dataset.pid = product.getPid;
@@ -130,13 +131,13 @@ const actualizarTotalProdCard = (e) => {
 	const button = e.target;
 	const cardID = e.target.dataset.pid;
 	const cantidad = parseInt(
-		document.querySelector(`#cantidadAcomprar[data-pid="${cardID}"]`)
+		document.querySelector(`.cantidadAcomprar[data-pid="${cardID}"]`)
 			.textContent
 	);
 	const precioXunidad = parseFloat(
-		document.querySelector(`#precioXunidad[data-pid="${cardID}"]`).textContent
+		document.querySelector(`.precioXunidad[data-pid="${cardID}"]`).textContent
 	);
-	const totalCard = document.querySelector(`#totalCard[data-pid="${cardID}"]`);
+	const totalCard = document.querySelector(`.totalCard[data-pid="${cardID}"]`);
 
 	const totalCompra = parseFloat(cantidad * precioXunidad);
 	totalCard.textContent = formatearNumbero(totalCompra);
@@ -146,7 +147,7 @@ const sumProd = (e) => {
 	const button = e.target;
 	const dataID = button.dataset.pid; 
 	const span = document.querySelector(
-		`#cantidadAcomprar[data-pid="${dataID}"]`
+		`.cantidadAcomprar[data-pid="${dataID}"]`
 	);
 	const cantidad = parseInt(span.textContent);
 	const selectedProd = productos.filter(
@@ -161,7 +162,7 @@ const restProd = (e) => {
 	const button = e.target;
 	const dataID = button.getAttribute('data-pid'); // opcion 2
 	const span = document.querySelector(
-		`#cantidadAcomprar[data-pid='${dataID}']`
+		`.cantidadAcomprar[data-pid='${dataID}']`
 	);
 	let cantidad = parseInt(span.textContent);
 	if (cantidad - 1 > 0) span.textContent = cantidad - 1;
@@ -178,7 +179,7 @@ const añadirProductosAlCarrito = async (e) => {
 	const selecProdIndex = productos.findIndex((item) => item.getPid === dataID);
 	const selecProd = productos[selecProdIndex];
 	const cantidadAcomprar = parseInt(
-		document.querySelector(`#cantidadAcomprar[data-pid="${dataID}"]`)
+		document.querySelector(`.cantidadAcomprar[data-pid="${dataID}"]`)
 			.textContent
 	);
 	if (cantidadAcomprar != 0) {

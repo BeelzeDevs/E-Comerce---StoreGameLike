@@ -95,6 +95,10 @@ const actualizarTotalAlCarrito = () => {
 	cartTotalPage.textContent =
 		'$' +
 		formatearNumbero2Decimales(parseFloat(SumaTotalEnvios + SumaTotalPrecios));
+	// estilo dinámico del Saldo Restante 
+	if(CuentaSaldoRestante < 0) carritoSaldoRestanteAlComprar.style.color = 'Red';
+	else carritoSaldoRestanteAlComprar.style.color = 'mediumspringgreen';
+
 	actualizarUnidadesCarritoIndex();
 };
 
@@ -105,16 +109,16 @@ const pintarCarrito = () => {
 	cartProducts.innerHTML = '';
 	carrito.forEach((item) => {
 		const clone = templateCart.content.cloneNode(true);
-		const productName = clone.querySelector('#product-name');
+		const productName = clone.querySelector('.product-name');
 		const cantidadAcomprarCarrito = clone.querySelector(
-			'#cantidadAcomprarCarrito'
+			'.cantidadAcomprarCarrito'
 		);
-		const botonMenos = clone.querySelector('#cart-cantidadMenos');
-		const botonMas = clone.querySelector('#cart-cantidadMas');
-		const precioXunidadCarrito = clone.querySelector('#precioXunidadCarrito');
-		const precioEnvioCarrito = clone.querySelector('#precioEnvioCarrito');
-		const cartProductTotal = clone.querySelector('#cartProduct-total');
-		const cartBtnEliminar = clone.querySelector('#cartbtn-eliminar');
+		const botonMenos = clone.querySelector('.cart-cantidadMenos');
+		const botonMas = clone.querySelector('.cart-cantidadMas');
+		const precioXunidadCarrito = clone.querySelector('.precioXunidadCarrito');
+		const precioEnvioCarrito = clone.querySelector('.precioEnvioCarrito');
+		const cartProductTotal = clone.querySelector('.cartProduct-total');
+		const cartBtnEliminar = clone.querySelector('.cartbtn-eliminar');
 		//dataset id
 		botonMas.dataset.pid = item.getPid;
 		botonMenos.dataset.pid = item.getPid;

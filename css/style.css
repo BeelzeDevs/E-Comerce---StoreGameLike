@@ -61,7 +61,7 @@ a {
 .products .product-card .prod-container-1 .prod-titulo p {
   margin: 0px;
 }
-.products .product-card .prod-container-1 .prod-titulo #prod-stock {
+.products .product-card .prod-container-1 .prod-titulo .prod-stock {
   font-size: 0.8em;
 }
 .products .product-card .prod-container-1 .prod-info {
@@ -121,7 +121,7 @@ a {
 .products .product-card .prod-container-2 .order-total p {
   margin: 0px;
 }
-.products .product-card .prod-container-2 button#agregarCarrito {
+.products .product-card .prod-container-2 button.agregarCarrito {
   border-radius: 7px;
   background-color: rgb(9, 210, 9);
   color: white;

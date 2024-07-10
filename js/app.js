@@ -24,17 +24,17 @@ document.addEventListener('click', async (e) => {
 	if (e.target.matches('#cartLogo')) {
 		toggleCart();
 	}
-	if (e.target.matches('#agregarCarrito')) {
+	if (e.target.matches('.agregarCarrito')) {
 		añadirProductosAlCarrito(e);
 		
 	}
-	if (e.target.matches('#prod-cantidadMenos')) {
+	if (e.target.matches('.prod-cantidadMenos')) {
 		restProd(e);
 	}
-	if (e.target.matches('#prod-cantidadMas')) {
+	if (e.target.matches('.prod-cantidadMas')) {
 		sumProd(e);
 	}
-	if (e.target.matches('#cartbtn-eliminar')) {
+	if (e.target.matches('.cartbtn-eliminar')) {
 		eliminarDelCarrito(e);
 	}
 	if (e.target.matches('#cart-empty')) {
@@ -43,10 +43,10 @@ document.addEventListener('click', async (e) => {
 	if (e.target.matches('#cart-buy')) {
 		comprarCarrito();
 	}
-	if (e.target.matches('#cart-cantidadMas')) {
+	if (e.target.matches('.cart-cantidadMas')) {
 		sumProdCarrito(e);
 	}
-	if (e.target.matches('#cart-cantidadMenos')) {
+	if (e.target.matches('.cart-cantidadMenos')) {
 		restProdCarrito(e);
 	}
 	if (e.target.matches('#btnReinicio')) {

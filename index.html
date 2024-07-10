@@ -83,16 +83,16 @@
 
 			<template id="template-cartProduct">
 				<tr>
-					<td id="product-name">Manteca</td>
+					<td class="product-name">Manteca</td>
 					<td class="cart-unit">
-						<button id="cart-cantidadMenos">-</button
-						><span id="cantidadAcomprarCarrito">2</span
-						><button id="cart-cantidadMas">+</button>
+						<button class="cart-cantidadMenos">-</button
+						><span class="cantidadAcomprarCarrito">2</span
+						><button class="cart-cantidadMas">+</button>
 					</td>
-					<td id="precioXunidadCarrito">$500.00</td>
-					<td id="precioEnvioCarrito">$10.00</td>
-					<td class="cart-total" id="cartProduct-total">
-						$1000.00<button id="cartbtn-eliminar">-</button>
+					<td class="precioXunidadCarrito">$500.00</td>
+					<td class="precioEnvioCarrito">$10.00</td>
+					<td class="cart-total cartProduct-total" >
+						$1000.00<button class="cartbtn-eliminar">-</button>
 					</td>
 				</tr>
 			</template>
@@ -116,20 +116,20 @@
 			<section class="products" id="productsCardContainer"></section>
 
 			<template id="template-productCard">
-				<article class="product-card" id="productCard">
+				<article class="product-card" >
 					<div class="prod-container-1">
 						<div class="prod-titulo">
-							<h3 id="prod-brand">Marca</h3>
-							<p><span id="prod-name">Nombre producto</span></p>
-							<p><span id="prod-stock">cantidadStock</span></p>
+							<h3 class="prod-brand">Marca</h3>
+							<p><span class="prod-name">Nombre producto</span></p>
+							<p><span class="prod-stock">cantidadStock</span></p>
 						</div>
 						<div class="prod-info">
-							<img src="img/manteca-taserenisima.png" alt="" id="prod-img" />
+							<img src="img/manteca-taserenisima.png" alt="" class="prod-img" />
 							<div>
 								<p>Categoría</p>
-								<p><span id="categoria">algo</span></p>
+								<p><span class="categoria">algo</span></p>
 								<p>Precio por unidad</p>
-								<p>$<span id="precioXunidad">13.55</span></p>
+								<p>$<span class="precioXunidad">13.55</span></p>
 							</div>
 						</div>
 					</div>
@@ -137,17 +137,17 @@
 						<div class="order">
 							<p>Cantidad</p>
 							<div class="order-buttons">
-								<button id="prod-cantidadMenos" data-pid="1">-</button
-								><span id="cantidadAcomprar" data-pid="1">3</span
-								><button id="prod-cantidadMas" data-pid="1">+</button>
+								<button class="prod-cantidadMenos" data-pid="1">-</button
+								><span class="cantidadAcomprar" data-pid="1">3</span
+								><button class="prod-cantidadMas" data-pid="1">+</button>
 							</div>
 						</div>
 						<div class="order-total">
 							<p>Total</p>
-							<p>$<span id="totalCard" data-pid="1">1</span></p>
+							<p>$<span class="totalCard" data-pid="1">1</span></p>
 						</div>
 						<div>
-							<button id="agregarCarrito">Añadir al carrito</button>
+							<button class="agregarCarrito">Añadir al carrito</button>
 						</div>
 					</div>
 				</article>
